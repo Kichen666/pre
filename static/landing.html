@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Compass</title>
+<link rel="stylesheet" href="/static/css/landing.css?v=20260906d">
+</head>
+<body>
+
+  <!-- 背景视频：小金牛（静音预加载，禁止自动播放；播放进度随鼠标水平移动而改变） -->
+  <video class="bg-video" muted preload="auto" playsinline>
+    <source src="/static/video/hero-bull.mp4" type="video/mp4">
+  </video>
+  <div class="bg-fallback"></div>
+
+  <!-- 右侧标题区 -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="kicker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 5-5"/></svg>
+        LOCAL TERMINAL
+      </div>
+      <h1 class="title">Portfolio<br>Compass</h1>
+      <p class="subtitle">本机私有的量化投资数据看板 —— 市场行情、股指升贴水、持仓分析与策略回测，一站集成，数据只属于你。</p>
+      <a class="btn-start" href="/board">开始体验 →</a>
+      <div class="foot-note">本机运行 · 数据源自 AKShare · 完整净值仅存此浏览器</div>
+    </div>
+  </div>
+
+  <!-- ================= 左侧山路进度条：白点沿路径前进，经过段变实线 ================= -->
+  <aside class="rail" id="rail">
+    <svg class="rail-road" viewBox="0 0 100 1000" preserveAspectRatio="none">
+      <!-- 基础虚线路径（牛未经过的部分） -->
+      <path id="rail-road-path" d="M50 0 C 18 110, 82 190, 50 300 S 18 480, 50 600 S 82 790, 50 900 L 50 1000"
+            fill="none" stroke="rgba(184,146,60,.5)" stroke-width="9" stroke-linecap="round" stroke-dasharray="1 15"/>
+      <!-- 实线路径：牛经过的部分变实线（stroke-dashoffset 由 JS 更新） -->
+      <path id="rail-path-solid" d="M50 0 C 18 110, 82 190, 50 300 S 18 480, 50 600 S 82 790, 50 900 L 50 1000"
+            fill="none" stroke="#e8a800" stroke-width="9" stroke-linecap="round"
+            pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"/>
+    </svg>
+    <img class="rail-dot" id="rail-dot" src="/static/img/calf.png" alt="小金牛">
+  </aside>
+
+  <!-- ================= 产品介绍：四屏共享一条连续渐变背景 ================= -->
+  <div class="product-wrap">
+    <div class="page-gradient"></div>
+
+  <!-- ================= 第一屏：首页市场概览简介 ================= -->
+  <section class="screen s1" id="sec-1">
+    <div class="calf-glow"></div>
+    <img class="screen-calf" src="/static/img/calf.png" alt="小金牛">
+    <div class="sparks">
+      <i style="left:18%;top:22%">✦</i><i style="left:31%;top:10%">✧</i><i style="left:12%;top:52%">✦</i>
+      <i style="left:26%;top:70%">✧</i><i style="left:44%;top:24%">✦</i><i style="left:38%;top:60%">✧</i>
+    </div>
+    <div class="s-copy">
+      <div class="kicker mini">MARKET PULSE · 第一屏</div>
+      <h2>首页 · 市场概览</h2>
+      <p>金牛带你看世界：上证、深证、创业板、科创50、北证50 五大指数实时行情，IC / IM / IF / IH 股指期货升贴水率，有色商品涨跌热力图 —— 涨红跌绿，一键数据刷新。</p>
+      <ul class="chips">
+        <li>五大指数行情</li><li>股指升贴水率</li><li>商品热力图</li><li>数据刷新</li>
+      </ul>
+    </div>
+    <div class="s-deco gold-ring">▲▲</div>
+  </section>
+
+  <!-- ================= 第二屏：持仓分析（三框 + 金币雨） ================= -->
+  <section class="screen s2" id="sec-2">
+    <div class="coins" id="coins"></div>
+    <img class="screen-calf" src="/static/img/calf.png" alt="小金牛">
+    <div class="s-mid">
+      <div class="stat-card c-black">
+        <span>总资产</span>
+        <b>¥1,286,420.35</b>
+        <em>较上月 +3.2%</em>
+      </div>
+      <div class="stat-card c-red">
+        <span>持仓收益</span>
+        <b>+¥86,420.35</b>
+        <em>+7.21% 收益率</em>
+      </div>
+      <div class="stat-card c-gold">
+        <span>分析报告</span>
+        <b>一键生成</b>
+        <em>量化私募视角</em>
+      </div>
+    </div>
+    <p class="s-caption">持仓分析：录入四列数据 → 持仓分布 / 盈亏分布 / 分析报告，财富在金币雨中稳步生长</p>
+  </section>
+
+  <!-- ================= 第三屏：策略分析（金牛沿金色柱图跳跃） ================= -->
+  <section class="screen s3" id="sec-3">
+    <div class="s-copy left">
+      <div class="kicker mini">STRATEGY ANALYSIS · 第三屏</div>
+      <h2>策略分析</h2>
+      <p>像这只小金牛一样，沿着金色阶梯向上跳：收益走势、夏普比率、卡玛比率、最大回撤、相关系数 —— 每一步都被数据记录。</p>
+      <ul class="chips">
+        <li>收益走势</li><li>夏普 / 卡玛</li><li>最大回撤</li><li>相关系数</li>
+      </ul>
+    </div>
+    <div class="chart-panel">
+      <div class="chart-bars">
+        <i style="--h:16%"></i><i style="--h:26%"></i><i style="--h:21%"></i><i style="--h:38%"></i>
+        <i style="--h:33%"></i><i style="--h:52%"></i><i style="--h:47%"></i><i style="--h:66%"></i>
+        <i style="--h:60%"></i><i style="--h:78%"></i><i style="--h:86%"></i><i style="--h:100%"></i>
+        <img class="chart-bull" src="/static/img/calf.png" alt="跳跳牛">
+        <span class="rise-badge rb1">+8.4%</span>
+        <span class="rise-badge rb2">+15.2%</span>
+        <span class="rise-badge rb3">+23.6%</span>
+      </div>
+      <div class="chart-axis">策略净值曲线示意 →</div>
+    </div>
+  </section>
+
+  <!-- ================= 第四屏：收工 ================= -->
+  <section class="screen s4" id="sec-4">
+    <div class="sparks">
+      <i style="left:22%;top:18%">✦</i><i style="left:48%;top:12%">✧</i><i style="left:64%;top:26%">✦</i>
+      <i style="left:36%;top:38%">✧</i><i style="left:70%;top:46%">✦</i><i style="left:80%;top:20%">✧</i>
+    </div>
+    <img class="s4-calf" src="/static/img/calf.png" alt="小金牛">
+    <h2>到底了，今日牛气收工</h2>
+    <p>明天见，愿你的净值一路向上。</p>
+    <button class="btn-top" id="btn-top">↑ 回到顶部</button>
+    <div class="s-deco coins-bg">🪙 🪙 🪙</div>
+  </section>
+  </div><!-- /product-wrap -->
+
+  <script>
+    // 小金牛流畅跟随鼠标：
+    // mousemove 只更新“目标时间”；rAF 循环里按缓动步进“展示时间”，
+    // 每次只发起一个 seek（seeked 确认后再继续），并用 fastSeek 就近关键帧跳转
+    (function () {
+      var video = document.querySelector('.bg-video');
+      var SENSITIVITY = 0.8;          // 灵敏度：1px 鼠标位移 → 0.8s 视频时间
+      var EASE = 0.35;                // 缓动系数：每帧向目标推进剩余偏差的比例
+      var MAX_STEP = 2.2;             // 单帧最大步进（秒），防止大幅跳帧
+      var lastX = null;               // 上一次 X 坐标
+      var duration = 0;               // 视频总时长（loadedmetadata 后获得）
+      var targetTime = 0;             // 鼠标最新目标时间
+      var displayTime = 0;            // 当前正在展示的时间（向其缓动）
+      var seeking = false;            // 是否有一个 seek 正在执行（单飞行）
+
+      // 视频加载失败时自动露出渐变兜底背景
+      video.addEventListener('error', function () { document.body.classList.add('no-video'); });
+      var src = video.querySelector('source');
+      if (src) src.addEventListener('error', function () { document.body.classList.add('no-video'); });
+      setTimeout(function () {
+        if (video.readyState < 2) document.body.classList.add('no-video');
+      }, 2000);
+
+      video.addEventListener('loadedmetadata', function () {
+        duration = video.duration || 0;
+        targetTime = displayTime = Math.max(0, duration * 0.4); // 初始：金牛正面
+        seekTo(displayTime);
+      });
+
+      function clamp(t) {
+        if (t < 0) return 0;
+        if (duration > 0 && t > duration) return duration;
+        return t;
+      }
+
+      function seekTo(t) {
+        if (duration <= 0 || video.readyState < 1) return;
+        seeking = true;
+        // fastSeek：直接跳到最近关键帧，解码最快（Chrome/Edge/Safari 均支持）
+        if (typeof video.fastSeek === 'function') { try { video.fastSeek(t); return; } catch (e) {} }
+        video.currentTime = t;
+      }
+
+      video.addEventListener('seeked', function () {
+        seeking = false;              // 一次 seek 完成，允许发起下一次
+      });
+
+      // 常驻 rAF 循环：展示时间按缓动逼近目标时间，单步限幅
+      (function tick() {
+        if (duration > 0 && !seeking) {
+          var diff = targetTime - displayTime;
+          if (Math.abs(diff) > 0.03) {
+            var step = diff * EASE;
+            if (Math.abs(step) > MAX_STEP) step = step > 0 ? MAX_STEP : -MAX_STEP;
+            displayTime = clamp(displayTime + step);
+            seekTo(displayTime);
+          } else {
+            displayTime = targetTime; // 收尾对齐，彻底消除残留抖动
+          }
+        }
+        requestAnimationFrame(tick);
+      })();
+
+      window.addEventListener('mousemove', function (e) {
+        // 全程静音、不播放：仅通过 seek 改变当前帧
+        if (lastX === null) { lastX = e.clientX; return; }
+        var dx = e.clientX - lastX;
+        lastX = e.clientX;
+        if (duration <= 0 || !isFinite(duration)) return;
+        targetTime = clamp(displayTime + dx * SENSITIVITY);
+      });
+
+      // 移出窗口后重置基准，避免重新进入时跳变
+      window.addEventListener('mouseout', function (e) {
+        if (e.relatedTarget === null) lastX = null;
+      });
+    })();
+
+    // ============ 山路进度条：金牛随滚动前进，里程碑点亮 ============
+    (function () {
+      var road = document.getElementById('rail-road-path');
+      var solid = document.getElementById('rail-path-solid');
+      var dot = document.getElementById('rail-dot');
+      var rail = document.getElementById('rail');
+      var pathLen = 0;
+
+      function measure() {
+        try { pathLen = road.getTotalLength(); } catch (e) { pathLen = 0; }
+      }
+
+      function onScroll() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        var p = max > 0 ? window.scrollY / max : 0;
+        // 白色圆点：精确落在路径当前点上
+        if (pathLen > 0) {
+          var pt = road.getPointAtLength(Math.max(0, Math.min(pathLen, p * pathLen)));
+          var svgRect = road.getBoundingClientRect();
+          var railRect = rail.getBoundingClientRect();
+          dot.style.left = (svgRect.left - railRect.left + (pt.x / 100) * svgRect.width) + 'px';
+          dot.style.top = (svgRect.top - railRect.top + (pt.y / 1000) * svgRect.height) + 'px';
+        }
+        // 经过段变实线：从头绘制到当前进度
+        solid.style.strokeDashoffset = String(100 * (1 - p));
+      }
+
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(function () { onScroll(); ticking = false; });
+        }
+      });
+      window.addEventListener('resize', function () { measure(); onScroll(); });
+      measure(); onScroll();
+    })();
+
+    // ============ 第二屏：金币雨特效 ============
+    (function () {
+      var wrap = document.getElementById('coins');
+      for (var i = 0; i < 30; i++) {
+        var c = document.createElement('span');
+        c.className = 'coin';
+        c.textContent = '🪙';
+        c.style.left = (Math.random() * 100) + '%';
+        c.style.fontSize = (13 + Math.random() * 17) + 'px';
+        c.style.animationDuration = (2.6 + Math.random() * 2.8) + 's';
+        c.style.animationDelay = (Math.random() * 4) + 's';
+        wrap.appendChild(c);
+      }
+    })();
+
+    // ============ 回到顶部 ============
+    document.getElementById('btn-top').addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Cathie Wood 漫画版 -->
+  <path d="M44 200 L44 166 Q44 126 100 118 Q156 126 156 166 L156 200 Z" fill="#31518f"/>
+  <path d="M100 112 L66 200 L134 200 Z" fill="#2b4677"/>
+  <path d="M84 130 L100 154 L116 130 L110 126 L100 142 L90 126 Z" fill="#f2e8da"/>
+  <circle cx="100" cy="168" r="3.6" fill="#e8ecf2"/>
+  <circle cx="91" cy="163" r="3" fill="#e8ecf2"/>
+  <circle cx="109" cy="163" r="3" fill="#e8ecf2"/>
+  <ellipse cx="100" cy="90" rx="45" ry="53" fill="#f2cba5"/>
+  <path d="M54 98 Q48 34 100 28 Q152 34 146 98 Q146 126 140 138 L138 102 Q136 62 100 56 Q64 62 62 102 L60 138 Q54 126 54 98 Z" fill="#8a4b2a"/>
+  <path d="M72 62 Q100 44 128 62 Q122 54 100 52 Q78 54 72 62 Z" fill="#96552f"/>
+  <path d="M66 74 Q78 66 90 71" stroke="#6e3a1f" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M110 71 Q122 66 134 74" stroke="#6e3a1f" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="77" cy="88" r="17" fill="none" stroke="#3d3d45" stroke-width="4"/>
+  <circle cx="123" cy="88" r="17" fill="none" stroke="#3d3d45" stroke-width="4"/>
+  <path d="M94 87 L106 87" stroke="#3d3d45" stroke-width="4"/>
+  <circle cx="77" cy="89" r="3.8" fill="#2b2b2b"/>
+  <circle cx="123" cy="89" r="3.8" fill="#2b2b2b"/>
+  <path d="M100 92 L95 108 Q100 112 105 108 Z" fill="#e8b98f"/>
+  <path d="M84 124 Q100 138 116 124" stroke="#95543a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M62 112 Q58 124 62 132" stroke="#8a4b2a" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <path d="M138 112 Q142 124 138 132" stroke="#8a4b2a" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <circle cx="72" cy="104" r="3.4" fill="#e8c04a"/>
+  <circle cx="128" cy="104" r="3.4" fill="#e8c04a"/>
+</svg>

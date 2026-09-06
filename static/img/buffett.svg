@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 巴菲特 漫画版 -->
+  <path d="M50 200 L50 168 Q50 128 100 120 Q150 128 150 168 L150 200 Z" fill="#2e3a52"/>
+  <path d="M84 134 L100 158 L116 134 L110 130 L100 146 L90 130 Z" fill="#f4f6fb"/>
+  <path d="M100 158 L95 170 L98 200 L102 200 L105 170 Z" fill="#b8342f"/>
+  <ellipse cx="100" cy="93" rx="50" ry="57" fill="#f0c9a4"/>
+  <path d="M48 92 Q44 38 92 32 Q131 28 140 50 Q153 58 151 86 Q148 62 122 55 Q98 50 84 58 Q60 40 52 60 Q46 74 48 92 Z" fill="#d7dbe0"/>
+  <path d="M66 74 Q78 65 90 71" stroke="#b0b6bf" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M110 71 Q122 65 134 74" stroke="#b0b6bf" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="78" cy="89" r="16" fill="none" stroke="#2f3745" stroke-width="4"/>
+  <circle cx="124" cy="89" r="16" fill="none" stroke="#2f3745" stroke-width="4"/>
+  <path d="M94 87 L106 87" stroke="#2f3745" stroke-width="4"/>
+  <circle cx="78" cy="90" r="4" fill="#2b2b2b"/>
+  <circle cx="124" cy="90" r="4" fill="#2b2b2b"/>
+  <path d="M100 94 L95 110 Q100 114 106 110 Z" fill="#e3b58b"/>
+  <path d="M82 126 Q100 144 118 126" stroke="#8c5a3f" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="49" cy="97" rx="8" ry="13" fill="#e8b98f"/>
+  <ellipse cx="151" cy="97" rx="8" ry="13" fill="#e8b98f"/>
+</svg>

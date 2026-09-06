@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Compass</title>
+<link rel="stylesheet" href="/static/css/style.css?v=20260906b">
+<script src="/static/vendor/echarts.min.js"></script>
+<script>if (typeof echarts === 'undefined') document.write('<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"><\/script>');</script>
+<script src="/static/vendor/xlsx.full.min.js"></script>
+<script>if (typeof XLSX === 'undefined') document.write('<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"><\/script>');</script>
+</head>
+<body>
+<div id="app" class="shell">
+
+  <!-- 左侧导航（深藏青侧栏 + logo） -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-kicker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 5-5"/></svg>
+        LOCAL TERMINAL
+      </div>
+      <div class="logo-name">
+        <span class="part-1">Portfolio</span>
+        <span class="part-2">Compass</span>
+      </div>
+    </div>
+    <div class="workspace-label">WORKSPACE</div>
+    <nav>
+      <button class="nav-item" data-view="overview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.7V21h14V9.7"/><path d="M10 21v-6h4v6"/></svg>
+        <span>首页概览</span>
+      </button>
+      <button class="nav-item" data-view="position">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+        <span>持仓分析</span>
+      </button>
+      <button class="nav-item" data-view="analysis">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-8"/><path d="M10 20V5"/><path d="M16 20v-5"/><path d="M4 20h16"/></svg>
+        <span>策略分析</span>
+      </button>
+      <button class="nav-item" data-view="expert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a8 8 0 1 1-4.9 14.4L4 20l1.5-3.4A8 8 0 0 1 12 4Z"/><path d="M9.5 10.5h5"/><path d="M9.5 13.5h3"/></svg>
+        <span>专家建议</span>
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="foot-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.4 3 8.1 7 10 4-1.9 7-5.6 7-10V6z"/></svg>
+        本机私有模式
+      </div>
+      <div class="foot-desc">完整净值仅存此浏览器；行情由本机 AKShare 服务获取。</div>
+    </div>
+  </aside>
+
+  <!-- 主内容区 -->
+  <main class="content">
+
+    <!-- 页头：分类标题 + 右上角时钟 -->
+    <header class="page-head">
+      <div class="ph-left">
+        <div class="kicker" id="ph-kicker">MARKET PULSE</div>
+        <h2 id="ph-title">首页概览</h2>
+      </div>
+      <div class="clock-block">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+        <div class="clock-text">
+          <div class="clock-time" id="clock-time">--:--:--</div>
+          <div class="clock-date" id="clock-date">----/--/-- · 北京时间</div>
+          <div class="greeting" id="greeting"></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="scroll-area">
+
+      <!-- ===================== 首页概览 ===================== -->
+      <section id="view-overview" class="view">
+        <!-- 信息横幅 -->
+        <div class="hero">
+          <div class="kicker">MARKET OVERVIEW</div>
+          <h3>市场与风险温度计</h3>
+          <div class="hero-row">
+            <span id="market-ts" class="muted small">数据源 AKShare · 等待首次刷新</span>
+            <span class="spacer"></span>
+            <button id="btn-refresh" class="btn">⟳ 数据刷新</button>
+          </div>
+        </div>
+
+        <!-- 模块：市场行情 -->
+        <div class="card">
+          <div class="card-head">
+            <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-8"/><path d="M10 20V5"/><path d="M16 20v-5"/><path d="M4 20h16"/></svg>
+            <div>
+              <div class="card-title">市场行情</div>
+              <div class="card-sub">中国主要指数 · 涨红跌绿 · 数据源 AKShare</div>
+            </div>
+          </div>
+          <div id="market-grid" class="market-grid">
+            <div class="muted" style="padding:20px">行情加载中…</div>
+          </div>
+        </div>
+
+        <!-- 模块：商品涨跌热力图 -->
+        <div class="card">
+          <div class="card-head">
+            <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+            <div>
+              <div class="card-title">商品涨跌热力图</div>
+              <div class="card-sub">有色商品主力合约 · 涨红跌绿 · 块大小 = 成交量 · 数据源 AKShare</div>
+            </div>
+          </div>
+          <div id="commodity-map" style="height:380px"></div>
+          <div id="commodity-note" class="muted small" style="margin-top:8px"></div>
+        </div>
+
+        <!-- 模块：股指期货升贴水率 -->
+        <div class="card">
+          <div class="card-head">
+            <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 3 6-7"/><path d="M17 8h4v4"/></svg>
+            <div>
+              <div class="card-title">股指期货升贴水率</div>
+              <div class="card-sub">IC · IM · IF · IH 当月合约 ｜ 年化口径 · 当月逐日走势</div>
+            </div>
+          </div>
+          <div id="basis-chips" class="basis-chips"></div>
+          <div id="basis-charts" class="basis-charts"></div>
+        </div>
+      </section>
+
+      <!-- ===================== 持仓分析 ===================== -->
+      <section id="view-position" class="view hidden">
+        <div class="toolbar">
+          <span class="muted small">录入或上传投资数据（策略名称、金额、买入净值、当前净值），自动生成持仓分布与盈亏分布饼图，并可生成量化私募投资分析报告</span>
+          <span class="spacer"></span>
+          <button id="btn-pos-upload" class="btn">📄 上传 Excel（四列）</button>
+          <input type="file" id="file-pos" accept=".xlsx,.xls" hidden>
+        </div>
+
+        <!-- 录入表单 -->
+        <div class="card">
+          <div class="card-head">
+            <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            <div>
+              <div class="card-title">录入持仓</div>
+              <div class="card-sub">策略名称 · 金额（元）· 买入净值 · 当前净值（回车或“＋ 添加”录入）</div>
+            </div>
+          </div>
+          <div class="pos-form">
+            <input class="pos-in" id="pos-name" placeholder="策略名称，如：xx量化优选">
+            <input class="pos-in" id="pos-amount" type="number" min="0" step="0.01" placeholder="金额（元）">
+            <input class="pos-in" id="pos-buy" type="number" min="0" step="0.0001" placeholder="买入净值">
+            <input class="pos-in" id="pos-cur" type="number" min="0" step="0.0001" placeholder="当前净值">
+            <button id="btn-pos-add" class="btn">＋ 添加</button>
+          </div>
+          <table class="pos-table">
+            <thead>
+              <tr><th>策略名称</th><th>投入金额</th><th>买入净值</th><th>当前净值</th><th>浮动盈亏</th><th></th></tr>
+            </thead>
+            <tbody id="pos-tbody"></tbody>
+          </table>
+          <div id="pos-empty" class="empty-tip hidden">暂无持仓数据 —— 在上方录入，或上传含【策略名称、金额、买入净值、当前净值】四列的 Excel。</div>
+        </div>
+
+        <!-- 图表 -->
+        <div class="pos-charts-grid">
+          <div class="card">
+            <div class="card-head">
+              <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18"/><path d="M12 6v6l4 3"/></svg>
+              <div>
+                <div class="card-title">持仓分布</div>
+                <div class="card-sub">按当前市值占比</div>
+              </div>
+            </div>
+            <div id="pos-pie-hold" class="pos-pie"></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h18"/><path d="M7 17 12 11l4 3 4-6"/><path d="M17 8h3v3"/></svg>
+              <div>
+                <div class="card-title">盈利 / 亏损分布</div>
+                <div class="card-sub">各策略浮动盈亏合计（红=盈利 · 绿=亏损）</div>
+              </div>
+            </div>
+            <div id="pos-pie-pl" class="pos-pie"></div>
+          </div>
+        </div>
+        <div id="pos-summary" class="pos-summary"></div>
+
+        <!-- 分析报告 -->
+        <div class="card">
+          <div class="card-head">
+            <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M5 4h14v4a7 7 0 0 1-14 0z"/><path d="M5 6H3v1a3 3 0 0 0 3 3"/><path d="M19 6h2v1a3 3 0 0 1-3 3"/></svg>
+            <div>
+              <div class="card-title">量化私募投资分析报告</div>
+              <div class="card-sub" id="pos-report-note">由本机分析引擎生成 · 不构成投资建议</div>
+            </div>
+            <span class="spacer"></span>
+            <button id="btn-pos-report" class="btn">🤖 生成分析报告</button>
+          </div>
+          <div id="pos-report" class="pos-report">
+            <div class="muted">录入持仓数据后，点击“生成分析报告”即可由分析引擎产出报告。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 策略分析 ===================== -->
+      <section id="view-analysis" class="view hidden">
+        <div class="toolbar">
+          <span class="muted small">上传多份 Excel 可计算相关系数；指标：总收益、年化收益、夏普比率、卡玛比率、最大回撤</span>
+          <span class="spacer"></span>
+          <button id="btn-upload-analysis" class="btn">📄 上传 Excel（可多选）</button>
+          <input type="file" id="file-analysis" accept=".xlsx,.xls" multiple hidden>
+        </div>
+        <div id="analysis-grid" class="analysis-grid"></div>
+        <div id="analysis-empty" class="empty-tip hidden">还没有分析数据 —— 点击右上角“上传 Excel”，选择包含【日期、净值】两列的文件。</div>
+        <div class="card hidden" id="corr-box">
+          <div class="card-head">
+            <svg class="card-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6.5h4.5A4.5 4.5 0 0 1 19 11v3"/></svg>
+            <div>
+              <div class="card-title">相关系数矩阵（日收益率）</div>
+              <div class="card-sub" id="corr-note"></div>
+            </div>
+          </div>
+          <div id="corr-chart" style="height:420px"></div>
+        </div>
+      </section>
+
+      <!-- ===================== 专家建议 ===================== -->
+      <section id="view-expert" class="view hidden">
+        <div class="toolbar">
+          <span class="muted small">两位投资代表的观点频道（漫画形象 · 分屏演示版，回车发送功能暂未开启）</span>
+        </div>
+        <div class="expert-split">
+
+          <!-- 巴菲特 -->
+          <div class="expert-panel buffett">
+            <div class="expert-panel-head">
+              <div>
+                <h3>沃伦·巴菲特</h3>
+                <span class="en">WARREN E. BUFFETT</span>
+              </div>
+              <span class="tick">BRK.A · 价值投资</span>
+            </div>
+            <div class="expert-stage">
+              <img src="/static/img/buffett.svg" alt="巴菲特漫画形象">
+              <div class="expert-tagline">
+                “别人恐惧我贪婪，别人贪婪我恐惧。”<br>
+                长期主义 · 护城河 · 复利
+              </div>
+            </div>
+            <div class="expert-input-wrap">
+              <input class="expert-input" type="text" placeholder="向巴菲特提问：例如“我该从哪开始做长期投资？”（当前仅输入，回车暂不发送）">
+              <div class="hint">输入框已就绪；回车发送/回复功能按计划暂不实现。</div>
+            </div>
+          </div>
+
+          <!-- Cathie Wood -->
+          <div class="expert-panel wood">
+            <div class="expert-panel-head">
+              <div>
+                <h3>凯瑟琳·伍德 <span class="en">CATHIE WOOD</span></h3>
+                <span class="en">ARK INVEST · 创新策略</span>
+              </div>
+              <span class="tick">ARKK · 颠覆式创新</span>
+            </div>
+            <div class="expert-stage">
+              <img src="/static/img/cathie_wood.svg" alt="Cathie Wood 漫画形象">
+              <div class="expert-tagline">
+                “创新是竞争力，颠覆是常态。”<br>
+                指数级增长 · 五大创新平台 · 税后回报
+              </div>
+            </div>
+            <div class="expert-input-wrap">
+              <input class="expert-input" type="text" placeholder="向 Cathie Wood 提问：例如“怎么看 AI 的投资机会？”（当前仅输入，回车暂不发送）">
+              <div class="hint">输入框已就绪；回车发送/回复功能按计划暂不实现。</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- 放大弹窗 -->
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <div class="modal-head">
+      <span id="modal-title"></span>
+      <div class="modal-tools">
+        <button class="btn-ghost" id="modal-zoom-in">＋ 放大</button>
+        <button class="btn-ghost" id="modal-zoom-out">－ 缩小</button>
+        <button class="btn-ghost" id="modal-reset">重置</button>
+        <button class="btn-ghost" id="modal-close">✕ 关闭</button>
+      </div>
+    </div>
+    <div id="modal-chart"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
